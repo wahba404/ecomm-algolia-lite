@@ -8,11 +8,11 @@ See instructions in the following:
 - src/pages/ProductDetailPage.jsx
 
 In my example the attributes used are as follows:  
-&nbsp;&nbsp;&nbsp;&nbsp; - objectID: hit["objectID"],
-&nbsp;&nbsp;&nbsp;&nbsp; - name: hit["product name"],
-&nbsp;&nbsp;&nbsp;&nbsp; - price: hit["sale price"],
-&nbsp;&nbsp;&nbsp;&nbsp; - image: hit["large image url"],
-&nbsp;&nbsp;&nbsp;&nbsp; - category: hit["category 1"],
-&nbsp;&nbsp;&nbsp;&nbsp; - color: hit["color"],
+    - objectID: hit["objectID"],
+    - name: hit["product name"],
+    - price: hit["sale price"],
+    - image: hit["large image url"],
+    - category: hit["category 1"],
+    - color: hit["color"],
 
 Run with npm run dev
