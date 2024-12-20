@@ -23,7 +23,7 @@ const PastPurchase = () => {
 
   useEffect(() => {
     if (pastPurchases.length > 0) {
-      const filters = pastPurchases.map((item) => {
+      const filters = pastPurchases.reverse().map((item) => {
         return `objectID:${item.objectID}`;
       });
       const combinedFilters = `${filters.join(" OR ")}`;
@@ -37,7 +37,7 @@ const PastPurchase = () => {
       <div className="border-b border-gray-300 mb-4"></div>
       <div className="relative w-full">
         <button
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full z-10"
           onClick={() => {
             document
               .getElementById("carousel")
@@ -48,24 +48,24 @@ const PastPurchase = () => {
         </button>
         <div
           id="carousel"
-          className="w-1/8 overflow-x-auto flex justify-start items-start"
+          className="w-full overflow-x-scroll flex justify-start items-start"
         >
           <Index indexName={import.meta.env.VITE_ALGOLIA_INDEX_NAME}>
-          {filterList.length >= 1 && <ScopedConfigure key={filterList} filters={filterList} />}
+          {filterList.length >= 1 ? <ScopedConfigure filters={filterList} /> : <ScopedConfigure filters={"objectID:-1"} /> }
             <Hits
               hitComponent={({ hit }) => (
                 <Hit hit={hit} highlight={Highlight} />
               )}
               classNames={{
-                root: "flex justify-start items-start p-4 m-4 ",
+                root: "flex justify-start items-start p-4 m-4",
                 list: "flex space-x-2 ",
-                item: "p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 scroll-snap-align-start h-1/4 w-1/4",
+                item: "p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 w-64",
               }}
             />
           </Index>
         </div>
         <button
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full z-10"
           onClick={() => {
             document
               .getElementById("carousel")
@@ -84,6 +84,7 @@ const ScopedConfigure = ({ filters }) => {
 // console.log("filters", filters); // "objectID:1F000121Khaki OR objectID:5CB6100 OR objectID:1F000121Khaki OR objectID:1G011055WhiteCap"
   useConfigure({
     hitsPerPage: 4,
+    page: 0,
     filters: filters || "", 
   });
 
