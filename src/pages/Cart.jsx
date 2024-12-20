@@ -47,6 +47,20 @@ function Cart() {
     localStorage.removeItem("cart");
   };
 
+  // Add past purchases to local storage
+  const addPastPurchases = () => {
+    const pastPurchases =
+      JSON.parse(localStorage.getItem("pastPurchases")) || [];
+    const newPastPurchases = [...pastPurchases, ...currentCart];
+    console.log(newPastPurchases);
+    localStorage.setItem("pastPurchases", JSON.stringify(newPastPurchases));
+  };
+
+  // Clear past purchases
+  const clearPastPurchases = () => {
+    localStorage.removeItem("pastPurchases");
+  };
+
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="absolute top-4 left-4 bg-white shadow-md rounded-lg p-6">
@@ -116,12 +130,23 @@ function Cart() {
           <p className="text-lg mb-2">
             Total Amount: ${totalAmount.toFixed(2)}
           </p>
-          <button
-            className="w-full bg-blue-500 text-white py-2 rounded mt-4"
-            onClick={removeAllItems}
-          >
-            Proceed to Checkout
-          </button>
+          <div className="items-center justify-center flex flex-col">
+            <button
+              className="w-full bg-blue-500 text-white py-2 rounded mt-4 hover:bg-blue-400"
+              onClick={() => {
+                addPastPurchases();
+                removeAllItems();
+              }}
+            >
+              Proceed to Checkout
+            </button>
+            <button
+              className="w-1/2 bg-red-500 text-white py-2 rounded mt-4 hover:bg-red-600"
+              onClick={clearPastPurchases}
+            >
+              Clear Past Purchases
+            </button>
+          </div>
         </div>
       </div>
     </div>

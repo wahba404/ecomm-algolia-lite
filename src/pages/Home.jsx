@@ -9,9 +9,11 @@ import {
   RefinementList,
   CurrentRefinements,
   Pagination,
+  Index,
 } from "react-instantsearch";
 import Hit from "../components/Hit";
 import { Link } from "react-router-dom";
+import PastPurchase from "../components/PastPurchase";
 
 const searchClient = algoliasearch(
   import.meta.env.VITE_ALGOLIA_APP_ID,
@@ -19,16 +21,16 @@ const searchClient = algoliasearch(
 );
 
 function Home() {
-    // Retrieve current cart from local storage
-    const [currentCart, setCurrentCart] = useState(
-      JSON.parse(localStorage.getItem("cart")) || []
-    );
-  
-    // Calculate the total amount
-    const totalQuantity = currentCart.reduce(
-      (total, item) => total + item.quantity,
-      0
-    );
+  // Retrieve current cart from local storage
+  const [currentCart, setCurrentCart] = useState(
+    JSON.parse(localStorage.getItem("cart")) || []
+  );
+
+  // Calculate the total amount
+  const totalQuantity = currentCart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
 
   return (
     <div className="container mx-auto p-8">
@@ -59,7 +61,7 @@ function Home() {
               "flex-center bg-gray-200 rounded-full mr-1/2 text-sm font-semibold text-gray-700",
             categoryLabel:
               "flex-center bg-gray-200 rounded-full p-1/2 text-sm font-semibold text-gray-700",
-            delete: "px-3 hover:text-red-900 hover:bg-red-100 rounded-full"
+            delete: "px-3 hover:text-red-900 hover:bg-red-100 rounded-full",
           }}
         />
         <div className="flex flex-col lg:flex-row">
@@ -75,7 +77,8 @@ function Home() {
                     item: "flex items-center space-x-2 text-lg",
                     label: "ml-2",
                     checkbox: "mr-2 h-3",
-                    count: "items-center justify-center ml-4 p-1 border rounded-full bg-slate-300 text-gray-700 text-xs",
+                    count:
+                      "items-center justify-center ml-4 p-1 border rounded-full bg-slate-300 text-gray-700 text-xs",
                   }}
                 />
               </div>
@@ -91,13 +94,17 @@ function Home() {
                     item: "flex items-center space-x-2 text-lg",
                     label: "ml-2",
                     checkbox: "mr-2 h-3",
-                    count: "items-center justify-center ml-4 p-1 border rounded-full bg-slate-300 text-gray-700 text-xs",
+                    count:
+                      "items-center justify-center ml-4 p-1 border rounded-full bg-slate-300 text-gray-700 text-xs",
                   }}
                 />
               </div>
             </div>
           </div>
           <div className="lg:w-3/4 mt-7 px-5">
+            
+              <PastPurchase />
+        
             <Hits
               hitComponent={({ hit }) => (
                 <Hit hit={hit} highlight={Highlight} />
@@ -124,9 +131,9 @@ function Home() {
       >
         Go to Cart
         {totalQuantity !== 0 && (
-      <span className="ml-2 bg-red-500 text-white rounded-full px-2 py-1 text-xs">
-        {totalQuantity}
-      </span>
+          <span className="ml-2 bg-red-500 text-white rounded-full px-2 py-1 text-xs">
+            {totalQuantity}
+          </span>
         )}
       </Link>
     </div>
