@@ -1,33 +1,12 @@
-import { useEffect, useState } from 'react'
 import { Configure, Hits, Highlight, Index, useConfigure } from 'react-instantsearch'
 import Hit from './Hit'
 
-const getPastPurchases = () => {
-  try {
-    return JSON.parse(localStorage.getItem('pastPurchases')) || []
-  } catch (error) {
-    console.error('Unable to access localStorage:', error)
-    return []
-  }
-}
+import { usePastPurchases } from '../hooks/usePastPurchases'
 
 const PastPurchase = () => {
-  const [filterList, setFilterList] = useState([])
+  const filterList = usePastPurchases()
 
-  useEffect(() => {
-    const pastPurchases = getPastPurchases()
-
-    if (pastPurchases?.length > 0) {
-      const filters = pastPurchases.map((item) => {
-        return `objectID:${item.objectID}`
-      })
-      const combinedFilters = `"${filters.join(' OR ')}"`
-      setFilterList(combinedFilters)
-      console.log('Updated filters:', combinedFilters) // Log here to confirm the filters
-    } else {
-      setFilterList([]) // Explicitly handle empty filters
-    }
-  }, [])
+  console.log(filterList)
 
   return (
     <div className="container mx-auto p-8 ">
