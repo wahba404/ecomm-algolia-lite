@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  Configure,
   Hits,
   Highlight,
   Index,
@@ -51,7 +50,7 @@ const PastPurchase = () => {
           className="w-full overflow-x-scroll flex justify-start items-start"
         >
           <Index indexName={import.meta.env.VITE_ALGOLIA_INDEX_NAME}>
-          {filterList.length >= 1 ? <ScopedConfigure filters={filterList} /> : <ScopedConfigure filters={"objectID:-1"} /> }
+          {filterList.length >= 1 ? <><ScopedConfigure filters={filterList} /> 
             <Hits
               hitComponent={({ hit }) => (
                 <Hit hit={hit} highlight={Highlight} />
@@ -62,6 +61,13 @@ const PastPurchase = () => {
                 item: "p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 w-64",
               }}
             />
+            </>
+            : 
+            <>
+            <ScopedConfigure filters={"objectID:-1"} /> 
+            <p className="flex justify-center w-full text-center py-8 text-xl font-semibold">You have no past purchases, go get you some!!!</p>
+            </>
+            }
           </Index>
         </div>
         <button
