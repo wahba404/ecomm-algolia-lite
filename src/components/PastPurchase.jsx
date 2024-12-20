@@ -8,18 +8,17 @@ import {
 } from "react-instantsearch";
 import Hit from "./Hit";
 
+const getPastPurchases = () => {
+  try {
+    return JSON.parse(localStorage.getItem("pastPurchases")) || [];
+  } catch (error) {
+    console.error("Unable to access localStorage:", error);
+    return [];
+  }
+};
+
 const PastPurchase = () => {
-  const getPastPurchases = () => {
-    try {
-      return JSON.parse(localStorage.getItem("pastPurchases")) || [];
-    } catch (error) {
-      console.error("Unable to access localStorage:", error);
-      return [];
-    }
-  };
-
-  const [filterList, setFilterList] = useState("");
-
+  const [filterList, setFilterList] = useState([]);
   const pastPurchases = getPastPurchases();
 
   useEffect(() => {
@@ -27,13 +26,10 @@ const PastPurchase = () => {
       const filters = pastPurchases.map((item) => {
         return `objectID:${item.objectID}`;
       });
-      const combinedFilters = `"${filters.join(" OR ")}"`;
+      const combinedFilters = `${filters.join(" OR ")}`;
       setFilterList(combinedFilters);
-      console.log("Updated filters:", combinedFilters); // Log here to confirm the filters
-    } else {
-      setFilterList(null); // Explicitly handle empty filters
     }
-  }, [pastPurchases]);
+  }, []);
 
   return (
     <div className="container mx-auto p-8 ">
@@ -88,7 +84,7 @@ const ScopedConfigure = ({ filters }) => {
 // console.log("filters", filters); // "objectID:1F000121Khaki OR objectID:5CB6100 OR objectID:1F000121Khaki OR objectID:1G011055WhiteCap"
   useConfigure({
     hitsPerPage: 4,
-    filters:   filters || "", 
+    filters: filters || "", 
   });
 
   return null; // This component only handles configuration

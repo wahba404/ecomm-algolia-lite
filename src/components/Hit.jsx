@@ -87,7 +87,7 @@ function Hit({ hit, highlight: Highlight }) {
             Add to Cart
           </button>
           {notification && (
-            <div className="absolute top-24 right-1 mt-2 mr-2 bg-green-500 bg-opacity-75 text-white text-lg px-6 py-4 rounded">
+            <div className="fixed top-24 right-1 mt-2 mr-2 bg-green-500 bg-opacity-75 text-white text-lg px-6 py-4 rounded">
               <Link to="/cart" className="flex">
                 {notification}
               </Link>
