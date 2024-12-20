@@ -2,21 +2,21 @@ import { useEffect, useState } from 'react'
 import { Configure, Hits, Highlight, Index, useConfigure } from 'react-instantsearch'
 import Hit from './Hit'
 
-const PastPurchase = () => {
-  const getPastPurchases = () => {
-    try {
-      return JSON.parse(localStorage.getItem('pastPurchases')) || []
-    } catch (error) {
-      console.error('Unable to access localStorage:', error)
-      return []
-    }
+const getPastPurchases = () => {
+  try {
+    return JSON.parse(localStorage.getItem('pastPurchases')) || []
+  } catch (error) {
+    console.error('Unable to access localStorage:', error)
+    return []
   }
+}
 
+const PastPurchase = () => {
   const [filterList, setFilterList] = useState([])
 
-  const pastPurchases = getPastPurchases()
-
   useEffect(() => {
+    const pastPurchases = getPastPurchases()
+
     if (pastPurchases?.length > 0) {
       const filters = pastPurchases.map((item) => {
         return `objectID:${item.objectID}`
@@ -27,7 +27,7 @@ const PastPurchase = () => {
     } else {
       setFilterList([]) // Explicitly handle empty filters
     }
-  }, [pastPurchases])
+  }, [])
 
   return (
     <div className="container mx-auto p-8 ">
