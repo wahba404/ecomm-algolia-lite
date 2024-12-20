@@ -69,7 +69,7 @@ function Cart() {
         </Link>
       </div>
       <h1 className="text-4xl font-bold my-8">Cart Page</h1>
-      <div className="container mx-auto p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="flex flex-col items-center justify-center container mx-auto p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           {currentCart.length > 0 ? (
             currentCart.map((item, index) => (
@@ -124,7 +124,7 @@ function Cart() {
             <p className="text-center text-gray-500">Your cart is empty.</p>
           )}
         </div>
-        <div className="bg-white shadow-md rounded-lg p-6">
+        <div    className="w-full bg-white shadow-md rounded-lg p-6 sticky top-24 self-start">
           <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
           <p className="text-lg mb-2">Total Items: {currentCart.length}</p>
           <p className="text-lg mb-2">
