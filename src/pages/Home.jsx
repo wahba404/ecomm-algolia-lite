@@ -32,6 +32,13 @@ function Home() {
     0
   );
 
+  // Clear past purchases
+  const clearPastPurchases = () => {
+    localStorage.removeItem("pastPurchases");
+    // refresh the page
+    window.location.reload();
+  };
+
   return (
     <div className="container mx-auto p-8">
       <InstantSearch
@@ -102,9 +109,8 @@ function Home() {
             </div>
           </div>
           <div className="lg:w-3/4 mt-7 px-5">
-            
-              <PastPurchase />
-        
+            <PastPurchase />
+
             <Hits
               hitComponent={({ hit }) => (
                 <Hit hit={hit} highlight={Highlight} />
@@ -127,7 +133,7 @@ function Home() {
       </InstantSearch>
       <Link
         to="/cart"
-        className="fixed top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg"
+        className="fixed top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600"
       >
         Go to Cart
         {totalQuantity !== 0 && (
@@ -136,6 +142,12 @@ function Home() {
           </span>
         )}
       </Link>
+      <button
+        className="fixed top-16 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-red-600"
+        onClick={clearPastPurchases}
+      >
+        Clear Past Purchases
+      </button>
     </div>
   );
 }
