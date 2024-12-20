@@ -1,39 +1,33 @@
-import { useEffect, useState } from "react";
-import {
-  Configure,
-  Hits,
-  Highlight,
-  Index,
-  useConfigure,
-} from "react-instantsearch";
-import Hit from "./Hit";
+import { useEffect, useState } from 'react'
+import { Configure, Hits, Highlight, Index, useConfigure } from 'react-instantsearch'
+import Hit from './Hit'
 
 const PastPurchase = () => {
   const getPastPurchases = () => {
     try {
-      return JSON.parse(localStorage.getItem("pastPurchases")) || [];
+      return JSON.parse(localStorage.getItem('pastPurchases')) || []
     } catch (error) {
-      console.error("Unable to access localStorage:", error);
-      return [];
+      console.error('Unable to access localStorage:', error)
+      return []
     }
-  };
+  }
 
-  const [filterList, setFilterList] = useState("");
+  const [filterList, setFilterList] = useState([])
 
-  const pastPurchases = getPastPurchases();
+  const pastPurchases = getPastPurchases()
 
   useEffect(() => {
-    if (pastPurchases.length > 0) {
+    if (pastPurchases?.length > 0) {
       const filters = pastPurchases.map((item) => {
-        return `objectID:${item.objectID}`;
-      });
-      const combinedFilters = `"${filters.join(" OR ")}"`;
-      setFilterList(combinedFilters);
-      console.log("Updated filters:", combinedFilters); // Log here to confirm the filters
+        return `objectID:${item.objectID}`
+      })
+      const combinedFilters = `"${filters.join(' OR ')}"`
+      setFilterList(combinedFilters)
+      console.log('Updated filters:', combinedFilters) // Log here to confirm the filters
     } else {
-      setFilterList(null); // Explicitly handle empty filters
+      setFilterList([]) // Explicitly handle empty filters
     }
-  }, [pastPurchases]);
+  }, [pastPurchases])
 
   return (
     <div className="container mx-auto p-8 ">
@@ -43,27 +37,20 @@ const PastPurchase = () => {
         <button
           className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
           onClick={() => {
-            document
-              .getElementById("carousel")
-              .scrollBy({ left: -300, behavior: "smooth" });
+            document.getElementById('carousel').scrollBy({ left: -300, behavior: 'smooth' })
           }}
         >
           &lt;
         </button>
-        <div
-          id="carousel"
-          className="w-1/8 overflow-x-auto flex justify-start items-start"
-        >
+        <div id="carousel" className="w-1/8 overflow-x-auto flex justify-start items-start">
           <Index indexName={import.meta.env.VITE_ALGOLIA_INDEX_NAME}>
-          {filterList.length >= 1 && <ScopedConfigure key={filterList} filters={filterList} />}
+            {filterList.length >= 1 && <ScopedConfigure key={filterList} filters={filterList} />}
             <Hits
-              hitComponent={({ hit }) => (
-                <Hit hit={hit} highlight={Highlight} />
-              )}
+              hitComponent={({ hit }) => <Hit hit={hit} highlight={Highlight} />}
               classNames={{
-                root: "flex justify-start items-start p-4 m-4 ",
-                list: "flex space-x-2 ",
-                item: "p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 scroll-snap-align-start h-1/4 w-1/4",
+                root: 'flex justify-start items-start p-4 m-4 ',
+                list: 'flex space-x-2 ',
+                item: 'p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 scroll-snap-align-start h-1/4 w-1/4',
               }}
             />
           </Index>
@@ -71,9 +58,7 @@ const PastPurchase = () => {
         <button
           className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
           onClick={() => {
-            document
-              .getElementById("carousel")
-              .scrollBy({ left: 300, behavior: "smooth" });
+            document.getElementById('carousel').scrollBy({ left: 300, behavior: 'smooth' })
           }}
         >
           &gt;
@@ -81,17 +66,17 @@ const PastPurchase = () => {
       </div>
       <div className="border-b border-gray-300 mb-4"></div>
     </div>
-  );
-};
+  )
+}
 
 const ScopedConfigure = ({ filters }) => {
-// console.log("filters", filters); // "objectID:1F000121Khaki OR objectID:5CB6100 OR objectID:1F000121Khaki OR objectID:1G011055WhiteCap"
+  // console.log("filters", filters); // "objectID:1F000121Khaki OR objectID:5CB6100 OR objectID:1F000121Khaki OR objectID:1G011055WhiteCap"
   useConfigure({
     hitsPerPage: 4,
-    filters:   filters || "", 
-  });
+    filters: filters || '',
+  })
 
-  return null; // This component only handles configuration
-};
+  return null // This component only handles configuration
+}
 
-export default PastPurchase;
+export default PastPurchase
