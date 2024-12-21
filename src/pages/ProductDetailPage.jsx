@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import { algoliasearch } from "algoliasearch";
 import { liteClient } from "algoliasearch/lite";
 import { useParams, Link } from "react-router-dom";
-import { InstantSearch, LookingSimilar, Carousel, Highlight } from "react-instantsearch";
+import {
+  InstantSearch,
+  LookingSimilar,
+  Carousel,
+  Highlight,
+} from "react-instantsearch";
 import Hit from "../components/Hit";
 
 const searchClient = algoliasearch(
@@ -134,7 +139,7 @@ function ProductDetailPage() {
 
         <div className="relative flex justify-center items-center space-x-2 mt-2">
           <button
-            className="bg-green-500 text-white text-sm px-2 py-1 rounded"
+            className="bg-green-500 text-white text-xl px-8 py-1.5 rounded"
             onClick={handleAddToCart}
           >
             Add to Cart
@@ -149,33 +154,36 @@ function ProductDetailPage() {
         </div>
       </article>
       <div className="container mx-auto p-8 mt-4">
-      <div className="border-b border-gray-300 mb-4"></div>
-      <div className="mt-12 w-full flex justify-start items-start"> 
-        <p className="w-full text-start text-xl font-semibold">Similar Products</p>
+        <div className="border-b border-gray-300 mb-4"></div>
+        <div className="mt-12 w-full flex justify-start items-start">
+          <p className="w-full text-start text-xl font-semibold">
+            Similar Products
+          </p>
         </div>
-      {response?.objectID ? (
-        <InstantSearch
-          searchClient={search2}
-          indexName={import.meta.env.VITE_ALGOLIA_INDEX_NAME}
-        >
-          <LookingSimilar
-            objectIDs={[response?.objectID]}
-            limit={5}
-            itemComponent={({ item }) => <Hit hit={item} highlight={Highlight} />}
-            classNames={{
-              title: 'hidden',
-              root: 'w-full overflow-x-scroll flex justify-start items-start',
-              list: 'mt-4 w-full overflow-x-scroll flex justify-start items-start',
-              item: 'mr-4 p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 w-64',
-            }}
-          />
-        </InstantSearch>
-      ) : (
-        <p>No similar products found</p>
-      )}
-    </div>
+        {response?.objectID ? (
+          <InstantSearch
+            searchClient={search2}
+            indexName={import.meta.env.VITE_ALGOLIA_INDEX_NAME}
+          >
+            <LookingSimilar
+              objectIDs={[response?.objectID]}
+              limit={5}
+              itemComponent={({ item }) => (
+                <Hit hit={item} highlight={Highlight} />
+              )}
+              classNames={{
+                title: "hidden",
+                root: "w-full overflow-x-scroll flex justify-start items-start",
+                list: "mt-4 w-full overflow-x-scroll flex justify-start items-start",
+                item: "mr-4 p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 w-64",
+              }}
+            />
+          </InstantSearch>
+        ) : (
+          <p>No similar products found</p>
+        )}
+      </div>
     </div>
   );
 }
-
 export default ProductDetailPage;
