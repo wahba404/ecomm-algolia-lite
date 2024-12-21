@@ -32,8 +32,8 @@ function Hit({ hit, highlight: Highlight }) {
         quantity: 1,
       });
     }
-    // 
-    // 
+    //
+    //
 
     // Save the updated cart to local storage
     localStorage.setItem("cart", JSON.stringify(currentCart));
@@ -75,9 +75,10 @@ function Hit({ hit, highlight: Highlight }) {
         {/*  */}
       </div>
       <div className="flex flex-col items-center w-full  mt-4 md:mt-6 lg:mt-8">
-
         {/* ADJUST ATTRIBUTE NAME BELOW */}
-        <p className="text-lg text-green-600">${hit["sale price"].toFixed(2)}</p>
+        <p className="text-lg text-green-600">
+          ${hit["sale price"].toFixed(2)}
+        </p>
         {/*  */}
         <div className="flex justify-center items-center space-x-2 mt-2">
           <button

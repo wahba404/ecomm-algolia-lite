@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Hits,
-  Highlight,
-  Index,
-  useConfigure,
-} from "react-instantsearch";
+import { Hits, Highlight, Index, useConfigure } from "react-instantsearch";
 import Hit from "./Hit";
 
 const getPastPurchases = () => {
@@ -23,11 +18,9 @@ const PastPurchase = () => {
   useEffect(() => {
     if (pastPurchases.length > 0) {
       const filters = pastPurchases.map((item) => {
-          console.log("item", item.objectID);
         return `objectID:'${item.objectID}'`;
       });
-      const combinedFilters = `${filters.join(' OR ')}`;
-      console.log("combinedFilters", combinedFilters);
+      const combinedFilters = `${filters.join(" OR ")}`;
       setFilterList(combinedFilters);
     }
   }, []);
@@ -52,24 +45,28 @@ const PastPurchase = () => {
           className="w-full overflow-x-scroll flex justify-start items-start"
         >
           <Index indexName={import.meta.env.VITE_ALGOLIA_INDEX_NAME}>
-          {filterList.length >= 1 ? <><ScopedConfigure filters={filterList} /> 
-            <Hits
-              hitComponent={({ hit }) => (
-                <Hit hit={hit} highlight={Highlight} />
-              )}
-              classNames={{
-                root: "flex justify-start items-start p-4 m-4",
-                list: "flex space-x-2 ",
-                item: "p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 w-64",
-              }}
-            />
-            </>
-            : 
-            <>
-            <ScopedConfigure filters={`objectID:-1`} /> 
-            <p className="flex justify-center w-full text-center py-8 text-xl font-semibold">You have no past purchases, go get you some!!!</p>
-            </>
-            }
+            {filterList.length >= 1 ? (
+              <>
+                <ScopedConfigure filters={filterList} />
+                <Hits
+                  hitComponent={({ hit }) => (
+                    <Hit hit={hit} highlight={Highlight} />
+                  )}
+                  classNames={{
+                    root: "flex justify-start items-start p-4 m-4",
+                    list: "flex space-x-2 ",
+                    item: "p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 w-64",
+                  }}
+                />
+              </>
+            ) : (
+              <>
+                <ScopedConfigure filters={`objectID:-1`} />
+                <p className="flex justify-center w-full text-center py-8 text-xl font-semibold">
+                  You have no past purchases, go get you some!!!
+                </p>
+              </>
+            )}
           </Index>
         </div>
         <button
@@ -89,11 +86,11 @@ const PastPurchase = () => {
 };
 
 const ScopedConfigure = ({ filters }) => {
-// console.log("filters", filters); // "objectID:1F000121Khaki OR objectID:5CB6100 OR objectID:1F000121Khaki OR objectID:1G011055WhiteCap"
+  // console.log("filters", filters); // "objectID:1F000121Khaki OR objectID:5CB6100 OR objectID:1F000121Khaki OR objectID:1G011055WhiteCap"
   useConfigure({
     hitsPerPage: 5,
     page: 0,
-    filters: `${filters}`, 
+    filters: `${filters}`,
   });
 
   return null; // This component only handles configuration

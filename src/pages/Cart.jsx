@@ -92,7 +92,9 @@ function Cart() {
                       </h1>
                     </Link>
                     <p className="text-gray-500">{item["category"]}</p>
-                    <p className="text-lg text-green-600">${item["price"].toFixed(2)}</p>
+                    <p className="text-lg text-green-600">
+                      ${item["price"].toFixed(2)}
+                    </p>
                     <p className="mt-2 text-gray-700">
                       Quantity: {item["quantity"]}
                     </p>
@@ -124,7 +126,7 @@ function Cart() {
             <p className="text-center text-gray-500">Your cart is empty.</p>
           )}
         </div>
-        <div    className="w-full bg-white shadow-md rounded-lg p-6 sticky top-24 self-start">
+        <div className="w-full bg-white shadow-md rounded-lg p-6 sticky top-24 self-start">
           <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
           <p className="text-lg mb-2">Total Items: {currentCart.length}</p>
           <p className="text-lg mb-2">
