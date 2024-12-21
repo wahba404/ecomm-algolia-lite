@@ -32,7 +32,7 @@ const PastPurchase = () => {
       <div className="border-b border-gray-300 mb-4"></div>
       <div className="relative w-full">
         <button
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full z-10"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
           onClick={() => {
             document
               .getElementById("carousel")
@@ -72,7 +72,7 @@ const PastPurchase = () => {
           </Index>
         </div>
         <button
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full z-10"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
           onClick={() => {
             document
               .getElementById("carousel")
@@ -82,7 +82,7 @@ const PastPurchase = () => {
           &gt;
         </button>
       </div>
-      <div className="border-b border-gray-300 mb-4"></div>
+      <div className="border-b border-gray-300"></div>
     </div>
   );
 };

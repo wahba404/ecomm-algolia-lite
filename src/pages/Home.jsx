@@ -126,6 +126,17 @@ function Home() {
   }, []);
   // --------------------------------------------------------------------------------
 
+  // --------------------------------------------------------------------------------
+  // Past Purchase Toggle
+  // --------------------------------------------------------------------------------
+  const [showPastPurchases, setShowPastPurchases] = useState(true);
+
+  const togglePastPurchases = () => {
+    setShowPastPurchases((prevState) => !prevState);
+  };
+
+  // --------------------------------------------------------------------------------
+
   return (
     <div className="container mx-auto p-8">
       <InstantSearch
@@ -199,7 +210,15 @@ function Home() {
             </div>
           </div>
           <div className="lg:w-3/4 mt-7 px-5">
-            <PastPurchase />
+            <button 
+              className="bg-blue-500 text-white px-4 py-2 mb-2 rounded-lg hover:bg-blue-600"
+              onClick={togglePastPurchases}>
+              {showPastPurchases
+                ? "X"
+                : "Show Past Purchases"}
+            </button>
+            {showPastPurchases && <PastPurchase />}
+            <div className="border-b border-gray-300 mt-4 mb-8"></div>
             <Hits
               hitComponent={({ hit }) => (
                 <Hit hit={hit} highlight={Highlight} />
