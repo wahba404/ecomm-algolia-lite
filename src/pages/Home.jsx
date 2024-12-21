@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 import {
   InstantSearch,
@@ -14,7 +14,7 @@ import Hit from "../components/Hit";
 import { Link } from "react-router-dom";
 import PastPurchase from "../components/PastPurchase";
 
-import { simple } from 'instantsearch.js/es/lib/stateMappings';
+import { simple } from "instantsearch.js/es/lib/stateMappings";
 
 const searchClient = algoliasearch(
   import.meta.env.VITE_ALGOLIA_APP_ID,
@@ -40,9 +40,29 @@ function Home() {
     window.location.reload();
   };
 
-const routing = {
-  stateMapping: simple(),
-};
+  const routing = {
+    stateMapping: simple(),
+  };
+
+  // Scroll behavior for buttons
+  //
+  //
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  //
+  //
 
   return (
     <div className="container mx-auto p-8">
@@ -138,7 +158,9 @@ const routing = {
       </InstantSearch>
       <Link
         to="/cart"
-        className="fixed top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600"
+        className={`fixed ${
+          isScrolled ? "top-4" : "top-24"
+        } right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg transition-all duration-300 hover:bg-blue-600`}
       >
         Go to Cart
         {totalQuantity !== 0 && (
@@ -148,7 +170,9 @@ const routing = {
         )}
       </Link>
       <button
-        className="fixed top-16 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-red-600"
+        className={`fixed ${
+          isScrolled ? "top-16" : "top-36"
+        } right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg transition-all duration-300 hover:bg-red-600`}
         onClick={clearPastPurchases}
       >
         Clear Past Purchases

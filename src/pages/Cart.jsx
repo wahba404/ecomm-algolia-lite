@@ -63,8 +63,11 @@ function Cart() {
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="absolute top-4 left-4 bg-white shadow-md rounded-lg p-6">
-        <Link to="/" className="text-blue-500">
+      <div className="absolute top-4 left-4 p-6">
+        <Link
+          to="/"
+          className="bg-blue-500 text-white px-4 py-2 rounded shadow-lg"
+        >
           Back to Home
         </Link>
       </div>
