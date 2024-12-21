@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Hits, Highlight, Index, useConfigure } from "react-instantsearch";
 import Hit from "./Hit";
+import CustomHits from "./CustomHits";
 
 const getPastPurchases = () => {
   try {
@@ -48,7 +49,8 @@ const PastPurchase = () => {
             {filterList.length >= 1 ? (
               <>
                 <ScopedConfigure filters={filterList} />
-                <Hits
+                <CustomHits />
+                {/* <Hits
                   hitComponent={({ hit }) => (
                     <Hit hit={hit} highlight={Highlight} />
                   )}
@@ -57,7 +59,7 @@ const PastPurchase = () => {
                     list: "flex space-x-2 ",
                     item: "p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 w-64",
                   }}
-                />
+                /> */}
               </>
             ) : (
               <>
