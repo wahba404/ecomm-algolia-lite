@@ -2,7 +2,7 @@ import { useHits, Highlight } from "react-instantsearch";
 import Hit from "./Hit";
 
 function CustomHits(props) {
-    const { items, sendEvent } = useHits(props);
+  const { items, sendEvent } = useHits(props);
 
   if (items.length === 0) {
     return (
@@ -26,6 +26,6 @@ function CustomHits(props) {
       </ul>
     </div>
   );
-};
+}
 
 export default CustomHits;

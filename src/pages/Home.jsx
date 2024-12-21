@@ -44,9 +44,9 @@ function Home() {
     stateMapping: simple(),
   };
 
+  // --------------------------------------------------------------------------------
   // Scroll behavior for buttons
-  //
-  //
+  // --------------------------------------------------------------------------------
   const [isScrolled, setIsScrolled] = useState(false);
 
   const handleScroll = () => {
@@ -61,8 +61,70 @@ function Home() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  //
-  //
+  // --------------------------------------------------------------------------------
+
+  //--------------------------------------------------------------------------------
+  // Animated placeholder
+  //--------------------------------------------------------------------------------
+  const DELAY_AFTER_ANIMATION = 1000; // How long to wait after finishing a placeholder
+
+  // All placeholders to cycle through:
+  const placeholders = [
+    "Polo...",
+    "Maxi dress...",
+    "Cardigan...",
+    "Shorts...",
+    "ET PHONE HOME...",
+  ];
+
+  // Helper to set the placeholder attribute:
+  function setPlaceholder(inputNode, text) {
+    inputNode.setAttribute("placeholder", text);
+  }
+
+  // Animate typing out one placeholder:
+  async function animateOnePlaceholder(inputNode, text) {
+    const letters = text.split("");
+    let currentString = [];
+
+    for (const letter of letters) {
+      currentString.push(letter);
+
+      // Update DOM
+      setPlaceholder(inputNode, currentString.join(""));
+
+      // Wait for a random delay
+      const delay = 90;
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+  }
+
+  // The main function that loops through all placeholders in sequence (forever):
+  async function animateAllPlaceholders(inputNode) {
+    while (true) {
+      for (let i = 0; i < placeholders.length; i++) {
+        await animateOnePlaceholder(inputNode, placeholders[i]);
+        // Wait a moment after finishing a placeholder before starting next
+        await new Promise((resolve) =>
+          setTimeout(resolve, DELAY_AFTER_ANIMATION)
+        );
+      }
+    }
+  }
+
+  // Kick off the animation once the component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const searchBar = document.querySelector(".ais-SearchBox-input");
+      if (searchBar) {
+        animateAllPlaceholders(searchBar);
+      }
+    }, 1000); // delay
+
+    // Cleanup
+    return () => clearTimeout(timer);
+  }, []);
+  // --------------------------------------------------------------------------------
 
   return (
     <div className="container mx-auto p-8">
@@ -75,9 +137,11 @@ function Home() {
         <Configure hitsPerPage={12} />
         <div className="mb-4">
           <SearchBox
+            placeholder=""
             classNames={{
               root: "relative",
-              input: "w-full p-3 border-2 border-gray-700 rounded",
+              input:
+                "w-full p-3 border-2 border-gray-700 rounded placeholder:text-xl",
               submit: "hidden",
               reset: "hidden",
             }}

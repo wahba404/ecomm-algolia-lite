@@ -20,6 +20,7 @@ const search2 = liteClient(
   import.meta.env.VITE_ALGOLIA_API_KEY
 );
 
+// --------------------------------------------------------------------------------
 // dummy default product data
 const product = {
   id: 1,
@@ -29,6 +30,7 @@ const product = {
   price: 29.99,
   imageUrl: "https://via.placeholder.com/300",
 };
+// --------------------------------------------------------------------------------
 
 function ProductDetailPage() {
   const { id } = useParams();
@@ -76,9 +78,9 @@ function ProductDetailPage() {
     }
     // If the item is not in the cart, add it
 
-    //
+    // --------------------------------------------------------------------------------
     // *** ADJUST ATTRIBUTE NAME HERE. DO NOT CHANGE KEY NAME ***
-    //
+    // --------------------------------------------------------------------------------
     else {
       currentCart.push({
         objectID: response?.["objectID"],
@@ -89,6 +91,7 @@ function ProductDetailPage() {
         color: response?.["color"],
         quantity: 1,
       });
+    // --------------------------------------------------------------------------------
     }
     // Save the updated cart to local storage
     localStorage.setItem("cart", JSON.stringify(currentCart));
