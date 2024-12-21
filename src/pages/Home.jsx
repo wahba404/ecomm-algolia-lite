@@ -14,6 +14,8 @@ import Hit from "../components/Hit";
 import { Link } from "react-router-dom";
 import PastPurchase from "../components/PastPurchase";
 
+import { simple } from 'instantsearch.js/es/lib/stateMappings';
+
 const searchClient = algoliasearch(
   import.meta.env.VITE_ALGOLIA_APP_ID,
   import.meta.env.VITE_ALGOLIA_API_KEY
@@ -38,11 +40,16 @@ function Home() {
     window.location.reload();
   };
 
+const routing = {
+  stateMapping: simple(),
+};
+
   return (
     <div className="container mx-auto p-8">
       <InstantSearch
         searchClient={searchClient}
         indexName={import.meta.env.VITE_ALGOLIA_INDEX_NAME}
+        routing={routing}
         insights
       >
         <Configure hitsPerPage={12} />
