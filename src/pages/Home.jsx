@@ -9,7 +9,6 @@ import {
   RefinementList,
   CurrentRefinements,
   Pagination,
-  Index,
 } from "react-instantsearch";
 import Hit from "../components/Hit";
 import { Link } from "react-router-dom";
@@ -110,7 +109,6 @@ function Home() {
           </div>
           <div className="lg:w-3/4 mt-7 px-5">
             <PastPurchase />
-
             <Hits
               hitComponent={({ hit }) => (
                 <Hit hit={hit} highlight={Highlight} />

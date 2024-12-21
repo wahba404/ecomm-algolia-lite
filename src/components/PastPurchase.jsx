@@ -22,10 +22,12 @@ const PastPurchase = () => {
 
   useEffect(() => {
     if (pastPurchases.length > 0) {
-      const filters = pastPurchases.reverse().map((item) => {
-        return `objectID:${item.objectID}`;
+      const filters = pastPurchases.map((item) => {
+          console.log("item", item.objectID);
+        return `objectID:'${item.objectID}'`;
       });
-      const combinedFilters = `${filters.join(" OR ")}`;
+      const combinedFilters = `${filters.join(' OR ')}`;
+      console.log("combinedFilters", combinedFilters);
       setFilterList(combinedFilters);
     }
   }, []);
@@ -64,7 +66,7 @@ const PastPurchase = () => {
             </>
             : 
             <>
-            <ScopedConfigure filters={"objectID:-1"} /> 
+            <ScopedConfigure filters={`objectID:-1`} /> 
             <p className="flex justify-center w-full text-center py-8 text-xl font-semibold">You have no past purchases, go get you some!!!</p>
             </>
             }
@@ -89,9 +91,9 @@ const PastPurchase = () => {
 const ScopedConfigure = ({ filters }) => {
 // console.log("filters", filters); // "objectID:1F000121Khaki OR objectID:5CB6100 OR objectID:1F000121Khaki OR objectID:1G011055WhiteCap"
   useConfigure({
-    hitsPerPage: 4,
+    hitsPerPage: 5,
     page: 0,
-    filters: filters || "", 
+    filters: `${filters}`, 
   });
 
   return null; // This component only handles configuration

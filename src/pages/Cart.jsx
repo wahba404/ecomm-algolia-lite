@@ -92,7 +92,7 @@ function Cart() {
                       </h1>
                     </Link>
                     <p className="text-gray-500">{item["category"]}</p>
-                    <p className="text-lg text-green-600">${item["price"]}</p>
+                    <p className="text-lg text-green-600">${item["price"].toFixed(2)}</p>
                     <p className="mt-2 text-gray-700">
                       Quantity: {item["quantity"]}
                     </p>
