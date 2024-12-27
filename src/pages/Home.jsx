@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import PastPurchase from "../components/PastPurchase";
 
 import { simple } from "instantsearch.js/es/lib/stateMappings";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 const searchClient = algoliasearch(
   import.meta.env.VITE_ALGOLIA_APP_ID,
@@ -219,6 +220,7 @@ function Home() {
             </button>
             {showPastPurchases && <PastPurchase />}
             <div className="border-b border-gray-300 mt-4 mb-8"></div>
+            <LoadingIndicator />
             <Hits
               hitComponent={({ hit }) => (
                 <Hit hit={hit} highlight={Highlight} />

@@ -1,5 +1,6 @@
 import { useHits, Highlight } from "react-instantsearch";
 import Hit from "./Hit";
+import LoadingIndicator from "./LoadingIndicator";
 
 function CustomHits(props) {
   const { items, sendEvent } = useHits(props);
@@ -14,6 +15,7 @@ function CustomHits(props) {
 
   return (
     <div className="flex justify-start items-start p-4 m-4">
+      <LoadingIndicator />
       <ul className="flex space-x-2">
         {items.map((hit) => (
           <li
