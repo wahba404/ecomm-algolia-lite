@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ProductAttributes } from "../utils/AttributesMapping";
 
 function Hit({ hit, highlight: Highlight }) {
   const [notification, setNotification] = useState("");
@@ -10,7 +11,7 @@ function Hit({ hit, highlight: Highlight }) {
 
     // Check if the item is already in the cart
     const itemInCart = currentCart.find(
-      (item) => item.objectID === hit.objectID
+      (item) => item.objectID === hit[ProductAttributes.objectID]
     );
     // If the item is already in the cart, increase the quantity
     if (itemInCart) {
@@ -23,12 +24,12 @@ function Hit({ hit, highlight: Highlight }) {
     //
     else {
       currentCart.push({
-        objectID: hit["objectID"],
-        name: hit["product name"],
-        price: hit["sale price"],
-        image: hit["large image url"],
-        category: hit["category 1"],
-        color: hit["color"],
+        objectID: hit[ProductAttributes.objectID],
+        name: hit[ProductAttributes.name],
+        price: hit[ProductAttributes.price],
+        image: hit[ProductAttributes.image],
+        category: hit[ProductAttributes.category],
+        color: hit[ProductAttributes.color],
         quantity: 1,
       });
     }
@@ -39,7 +40,7 @@ function Hit({ hit, highlight: Highlight }) {
     localStorage.setItem("cart", JSON.stringify(currentCart));
 
     // Display a notification
-    setNotification(`Item ${hit.objectID} added to cart`);
+    setNotification(`Item ${hit[ProductAttributes.objectID]} added to cart`);
     setTimeout(() => {
       setNotification("");
     }, 1000);
@@ -49,35 +50,36 @@ function Hit({ hit, highlight: Highlight }) {
     <article className="flex flex-col items-center p-2 h-full">
       <div className="flex flex-col items-center flex-grow">
         <Link
-          to={`/product/${encodeURIComponent(hit.objectID)}`}
+          to={`/product/${encodeURIComponent(hit[ProductAttributes.objectID])}`}
           className="flex justify-center w-full"
         >
           {/* ADJUST ATTRIBUTE NAME BELOW */}
           <img
-            src={hit["large image url"]}
-            alt={hit["product name"]}
+            src={hit[ProductAttributes.image]}
+            alt={hit[ProductAttributes.name]}
             className="w-1/2 max-w-xs h-auto mb-2 rounded object-cover"
           />
           {/*  */}
         </Link>
         {/* ADJUST ATTRIBUTE NAME BELOW */}
-        <p className="text-gray-500">{hit["category 1"]}</p>
+        <p className="text-gray-500">{hit[ProductAttributes.category]}</p>
         {/*  */}
 
         {/* ADJUST ATTRIBUTE NAME BELOW */}
         {/* <h1 className="text-xl font-bold mb-2">{hit["product name"]}</h1> */}
         <Highlight
-          attribute="product name"
+          attribute={ProductAttributes.name}
           hit={hit}
           tagName="h1"
-          className="text-xl h-12 text-center font-bold mb-2 break-words"
+          className="text-xl text-center font-bold mb-2 break-words overflow-hidden"
+          style={{ minHeight: "3rem", maxHeight: "5rem", overflowY: "auto", overflowWrap: "break-word", wordBreak: "break-word" }}
         />
         {/*  */}
       </div>
       <div className="flex flex-col items-center w-full  mt-4 md:mt-6 lg:mt-8">
         {/* ADJUST ATTRIBUTE NAME BELOW */}
         <p className="text-lg text-green-600">
-          ${hit["sale price"].toFixed(2)}
+          ${parseInt(hit[ProductAttributes.price]).toFixed(2)}
         </p>
         {/*  */}
         <div className="flex justify-center items-center space-x-2 mt-2">
@@ -94,7 +96,11 @@ function Hit({ hit, highlight: Highlight }) {
               </Link>
             </div>
           )}
-          <Link to={`/product/${encodeURIComponent(hit.objectID)}`}>
+          <Link
+            to={`/product/${encodeURIComponent(
+              hit[ProductAttributes.objectID]
+            )}`}
+          >
             <button className="bg-gray-500 text-white text-sm px-2 py-1 rounded">
               View Details
             </button>

@@ -9,6 +9,7 @@ import {
   Highlight,
 } from "react-instantsearch";
 import Hit from "../components/Hit";
+import { ProductAttributes } from '../utils/AttributesMapping';
 
 const searchClient = algoliasearch(
   import.meta.env.VITE_ALGOLIA_APP_ID,
@@ -83,12 +84,12 @@ function ProductDetailPage() {
     // --------------------------------------------------------------------------------
     else {
       currentCart.push({
-        objectID: response?.["objectID"],
-        name: response?.["product name"],
-        price: response?.["sale price"],
-        image: response?.["large image url"],
-        category: response?.["category 1"],
-        color: response?.["color"],
+        objectID: response?.[ProductAttributes.objectID],
+        name: response?.[ProductAttributes.name],
+        price: response?.[ProductAttributes.price],
+        image: response?.[ProductAttributes.image],
+        category: response?.[ProductAttributes.category],
+        color: response?.[ProductAttributes.color],
         quantity: 1,
       });
     // --------------------------------------------------------------------------------
@@ -97,7 +98,7 @@ function ProductDetailPage() {
     localStorage.setItem("cart", JSON.stringify(currentCart));
 
     // Display a notification
-    setNotification(`Item ${response?.objectID} added to cart`);
+    setNotification(`Item ${response?.[ProductAttributes.objectID]} added to cart`);
     setTimeout(() => {
       setNotification("");
     }, 3000);
@@ -122,21 +123,21 @@ function ProductDetailPage() {
       <article className="flex flex-col items-center">
         {/* ADJUST ATTRIBUTE NAMES BELOW */}
         <img
-          src={response?.["large image url"] || product.imageUrl}
-          alt={response?.["product name"] || product.name}
+          src={response?.[ProductAttributes.image] || product.imageUrl}
+          alt={response?.[ProductAttributes.name] || product.name}
           className="w-1/2 max-w-xs h-auto mb-4 rounded"
         />
         <h1 className="text-2xl font-bold mb-2">
-          {response?.["product name"] || product.name}
+          {response?.[ProductAttributes.name] || product.name}
         </h1>
         <p className="text-gray-500">
-          {response?.["category 1"] || product.category}
+          {response?.[ProductAttributes.category] || product.category}
         </p>
         <p className="text-lg text-green-600">
-          ${response?.["sale price"] || product.price}
+          ${response?.[ProductAttributes.price] || product.price}
         </p>
         <p className="mt-4 text-gray-700">
-          {response?.["description"] || product.description}
+          {response?.[ProductAttributes.description] || product.description}
         </p>
         {/*  */}
 
@@ -163,13 +164,13 @@ function ProductDetailPage() {
             Similar Products
           </p>
         </div>
-        {response?.objectID ? (
+        {response?.[ProductAttributes.objectID] ? (
           <InstantSearch
             searchClient={search2}
             indexName={import.meta.env.VITE_ALGOLIA_INDEX_NAME}
           >
             <LookingSimilar
-              objectIDs={[response?.objectID]}
+              objectIDs={[response?.[ProductAttributes.objectID]]}
               limit={5}
               itemComponent={({ item }) => (
                 <Hit hit={item} highlight={Highlight} />

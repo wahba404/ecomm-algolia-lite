@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ProductAttributes } from "../utils/AttributesMapping";
+
 
 function Cart() {
   // Retrieve current cart from local storage
