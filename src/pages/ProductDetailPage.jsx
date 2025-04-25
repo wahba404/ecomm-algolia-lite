@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import get from "lodash/get";
 import { algoliasearch } from "algoliasearch";
 import { liteClient } from "algoliasearch/lite";
-import { useParams, Link } from "react-router-dom";
 import {
   InstantSearch,
   LookingSimilar,
-  Carousel,
   Highlight,
 } from "react-instantsearch";
 import Hit from "../components/Hit";
-import get from "lodash/get";
 import { ProductAttributes } from "../config/attributesMapping";
+import useCart from "../utils/useCart";
+import '../styles/index.css';
 
 const searchClient = algoliasearch(
   import.meta.env.VITE_ALGOLIA_APP_ID,
@@ -38,6 +39,8 @@ function ProductDetailPage() {
   const { id } = useParams();
   const objectID = decodeURIComponent(id);
   const [response, setResponse] = useState(null);
+  const [notification, setNotification] = useState("");
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,44 +59,18 @@ function ProductDetailPage() {
     fetchData();
   }, [objectID]);
 
-  //   useEffect(() => {
-  //     console.log(objectID);
-  //     }, [objectID]);
-
-  //   useEffect(() => {
-  //     console.log(response);
-  //     }, [response]);
-
-  const [notification, setNotification] = useState("");
-
   const handleAddToCart = () => {
-    // Retireve current cart from local storage
-    const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const item = {
+      objectID: get(response, ProductAttributes.objectID),
+      name: get(response, ProductAttributes.name),
+      price: get(response, ProductAttributes.price),
+      image: get(response, ProductAttributes.image),
+      category: get(response, ProductAttributes.category),
+      color: get(response, ProductAttributes.color),
+    };
 
-    // Check if the item is already in the cart
-    const itemInCart = currentCart.find(
-      (item) => item.objectID === response?.objectID
-    );
-    // If the item is already in the cart, increase the quantity
-    if (itemInCart) {
-      itemInCart.quantity += 1;
-    }
-    // If the item is not in the cart, add it
-    else {
-      currentCart.push({
-        objectID: get(response, ProductAttributes.objectID),
-        name:     get(response, ProductAttributes.name),
-        price:    get(response, ProductAttributes.price),
-        image:    get(response, ProductAttributes.image),
-        category: get(response, ProductAttributes.category),
-        color:    get(response, ProductAttributes.color),
-        quantity: 1,
-      });
-    }
-    // Save the updated cart to local storage
-    localStorage.setItem("cart", JSON.stringify(currentCart));
+    addToCart(item);
 
-    // Display a notification
     setNotification(`Item ${get(response, ProductAttributes.objectID)} added to cart`);
     setTimeout(() => {
       setNotification("");
@@ -101,49 +78,52 @@ function ProductDetailPage() {
   };
 
   return (
-    <div className="container mx-auto p-8 relative">
+    <div className="container-page relative">
+      {/* Navigation links with reusable primary button style */}
       <div className="absolute top-4 left-4 flex space-x-4">
         <Link
           to="/"
-          className="bg-blue-500 text-white px-4 py-2 rounded shadow-lg"
+          className="btn-primary"
         >
           Back to Home
         </Link>
         <Link
           to="/cart"
-          className="bg-blue-500 text-white px-4 py-2 rounded shadow-lg"
+          className="btn-primary"
         >
           Go to Cart
         </Link>
       </div>
       <article className="flex flex-col items-center">
+        {/* Main product image */}
         <img
           src={get(response, ProductAttributes.image) || product.imageUrl}
           alt={get(response, ProductAttributes.name) || product.name}
           className="w-1/2 max-w-xs h-auto mb-4 rounded"
         />
-        <h1 className="text-2xl font-bold mb-2 dark:text-white">
+        {/* Product details */}
+        <h1 className="product-title">
         {get(response, ProductAttributes.name) || product.name}
         </h1>
-        <p className="text-gray-500 dark:text-gray-400">
+        <p className="product-category0">
         {get(response, ProductAttributes.category) || product.category}
         </p>
-        <p className="text-lg text-green-600 dark:text-green-400">
+        <p className="product-price">
         ${get(response, ProductAttributes.price)?.toFixed(2) || product.price}
         </p>
-        <p className="mt-4 text-gray-700 dark:text-gray-300">
+        <p className="product-description">
         {get(response, ProductAttributes.description) || product.description}
         </p>
-
+        {/* Add to Cart button and notification */}
         <div className="relative flex justify-center items-center space-x-2 mt-2">
           <button
-            className="bg-green-500 text-white text-xl px-8 py-1.5 rounded"
+            className="btn-success"
             onClick={handleAddToCart}
           >
             Add to Cart
           </button>
           {notification && (
-            <div className="absolute top-full mt-2 w-[64rem] bg-green-500 bg-opacity-75 text-white text-lg px-6 py-4 rounded">
+            <div className="notification">
               <Link to="/cart" className="flex">
                 {notification}
               </Link>
@@ -151,13 +131,9 @@ function ProductDetailPage() {
           )}
         </div>
       </article>
-      <div className="container mx-auto p-8 mt-4">
-        <div className="border-b border-gray-300 mb-4"></div>
-        <div className="mt-12 w-full flex justify-start items-start">
-          <p className="w-full text-start text-xl font-semibold">
-            Similar Products
-          </p>
-        </div>
+      <div className="container-page mt-4">
+        <div className="divider mb-4"></div>
+        <h2 className="text-xl font-semibold mt-12">Similar Products</h2>
         {get(response, ProductAttributes.objectID) ? (
           <InstantSearch
             searchClient={search2}
@@ -171,8 +147,8 @@ function ProductDetailPage() {
               )}
               classNames={{
                 title: "hidden",
-                root: "w-full overflow-x-scroll flex justify-start items-start",
-                list: "mt-4 w-full overflow-x-scroll flex justify-start items-start",
+                root: "w-full overflow-x-scroll flex",
+                list: "mt-4 w-full overflow-x-scroll flex",
                 item: "mr-4 p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 w-64",
               }}
             />

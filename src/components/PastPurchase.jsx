@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Hits, Highlight, Index, useConfigure } from "react-instantsearch";
-import Hit from "./Hit";
 import CustomHits from "./CustomHits";
 
 const getPastPurchases = () => {
@@ -27,12 +26,13 @@ const PastPurchase = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-8 ">
-      <h2 className="text-xl font-semibold mb-2">Past Purchases</h2>
-      <div className="border-b border-gray-300 mb-4"></div>
-      <div className="relative w-full">
+    <div className="container-page past-purchases">
+      <h2 className="section-title">Past Purchases</h2>
+      <div className="divider mb-4" />
+
+      <div className="carousel-wrapper">
         <button
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
+          className="carousel-button carousel-button--left"
           onClick={() => {
             document
               .getElementById("carousel")
@@ -43,7 +43,7 @@ const PastPurchase = () => {
         </button>
         <div
           id="carousel"
-          className="w-full overflow-x-scroll flex justify-start items-start"
+          className="carousel-container"
         >
           <Index indexName={import.meta.env.VITE_ALGOLIA_INDEX_NAME}>
             {filterList.length >= 1 ? (
@@ -64,7 +64,7 @@ const PastPurchase = () => {
             ) : (
               <>
                 <ScopedConfigure filters={`objectID:-1`} />
-                <p className="flex justify-center w-full text-center py-8 text-xl font-semibold">
+                <p className="empty-message">
                   You have no past purchases, go get you some!!!
                 </p>
               </>
@@ -72,7 +72,7 @@ const PastPurchase = () => {
           </Index>
         </div>
         <button
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
+          className="carousel-button carousel-button--right"
           onClick={() => {
             document
               .getElementById("carousel")
@@ -82,7 +82,7 @@ const PastPurchase = () => {
           &gt;
         </button>
       </div>
-      <div className="border-b border-gray-300"></div>
+      <div className="divider"></div>
     </div>
   );
 };

@@ -1,26 +1,27 @@
 import { useHits, Highlight } from "react-instantsearch";
 import Hit from "./Hit";
 import LoadingIndicator from "./LoadingIndicator";
+import "../styles/index.css";
 
 function CustomHits(props) {
   const { items, sendEvent } = useHits(props);
 
   if (items.length === 0) {
     return (
-      <p className="flex justify-center w-full text-center py-8 text-xl font-semibold">
+      <p className="hits-empty">
         No results found for your past purchases.
       </p>
     );
   }
 
   return (
-    <div className="flex justify-start items-start p-4 m-4">
+    <div className="custom-hits-wrapper">
       <LoadingIndicator />
-      <ul className="flex space-x-2">
+      <ul className="custom-hits-list">
         {items.map((hit) => (
           <li
             key={hit.objectID}
-            className="p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 w-64"
+            className="custom-hits-item"
           >
             <Hit hit={hit} highlight={Highlight} />
           </li>
