@@ -15,23 +15,11 @@ Run the following command to install all required dependencies:
 npm install
 ```
 
-### 3. Run the Development Server
-Start the development server with:
-```bash
-npm run dev
-```
+### 3. Create a new .env file based on .env.example
+ApplicationID, API Key, and Index Name required.
 
-The application will be available at **http://localhost:5173**.
-
----
-
-On your local machine, create a new .env file based on .env.example
-
-You will need to set up attributes as they are in your index. `objectID` must be present.  
-See instructions in the following:  
-- src/components/Hit.jsx
-- src/pages/ProductDetailPage.jsx
-
+### 4. Edit Attributes in utils/AttributeMapping.js
+You will need to set up attributes as they are in your index. `objectID` must be present. 
 In my example the attributes used are as follows:  
   - `objectID`: hit["objectID"]
   - `name`: hit["product name"]
@@ -40,4 +28,12 @@ In my example the attributes used are as follows:
   - `category`: hit["category 1"]
   - `color`: hit["color"]
 
-Run with npm run dev
+### 5. Run the Development Server
+Start the development server with:
+```bash
+npm run dev
+```
+
+The application will be available at **http://localhost:5173**.
+
+---
