@@ -1,4 +1,29 @@
-Simple ecomm starter app.
+
+## Getting Started
+
+Follow these steps to run the project locally:
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/wahba404/ecomm-algolia-lite.git
+cd ecomm-algolia-lite
+```
+
+### 2. Install Dependencies
+Run the following command to install all required dependencies:
+```bash
+npm install
+```
+
+### 3. Run the Development Server
+Start the development server with:
+```bash
+npm run dev
+```
+
+The application will be available at **http://localhost:5173**.
+
+---
 
 On your local machine, create a new .env file based on .env.example
 
