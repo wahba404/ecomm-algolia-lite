@@ -2,39 +2,25 @@ import { useState } from "react";
 import get from "lodash/get";
 import { Link } from "react-router-dom";
 import { ProductAttributes } from "../config/attributesMapping";
+import useCart from "../utils/useCart";
+import "../styles/index.css";
 
 function Hit({ hit, highlight: Highlight }) {
   const [notification, setNotification] = useState("");
+  const { addToCart } = useCart();
 
   const handleAddToCart = () => {
-    // Retireve current cart from local storage
-    const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const item = {
+      objectID: hit[ProductAttributes.objectID],
+      name: hit[ProductAttributes.name],
+      price: get(hit, ProductAttributes.price),
+      image: hit[ProductAttributes.image],
+      category: get(hit, ProductAttributes.category),
+      color: get(hit, ProductAttributes.color),
+    };
 
-    // Check if the item is already in the cart
-    const itemInCart = currentCart.find(
-      (item) => item.objectID === hit[ProductAttributes.objectID]
-    );
-    // If the item is already in the cart, increase the quantity
-    if (itemInCart) {
-      itemInCart.quantity += 1;
-    }
-    // If the item is not in the cart, add it
-    else {
-      currentCart.push({
-        objectID: hit[ProductAttributes.objectID],
-        name: hit[ProductAttributes.name],
-        price: get(hit, ProductAttributes.price),
-        image: hit[ProductAttributes.image],
-        category: get(hit, ProductAttributes.category),
-        color: get(hit, ProductAttributes.color),
-        quantity: 1,
-      });
-    }
+    addToCart(item);
 
-    // Save the updated cart to local storage
-    localStorage.setItem("cart", JSON.stringify(currentCart));
-
-    // Display a notification
     setNotification(`Item ${hit[ProductAttributes.objectID]} added to cart`);
     setTimeout(() => {
       setNotification("");
@@ -42,8 +28,8 @@ function Hit({ hit, highlight: Highlight }) {
   };
 
   return (
-    <article className="flex flex-col items-center p-2 h-full">
-      <div className="flex flex-col items-center flex-grow">
+    <article className="hit-card">
+      <div className="hit-content">
         <Link
           to={`/product/${encodeURIComponent(hit[ProductAttributes.objectID])}`}
           className="flex justify-center w-full"
@@ -51,33 +37,33 @@ function Hit({ hit, highlight: Highlight }) {
           <img
             src={hit[ProductAttributes.image]}
             alt={hit[ProductAttributes.name]}
-            className="w-1/2 max-w-xs h-auto mb-2 rounded object-cover"
+            className="hit-img"
           />
         </Link>
-        <p className="text-gray-500">{get(hit, ProductAttributes.category)}</p>
+        <p className="hit-category">{get(hit, ProductAttributes.category)}</p>
         {/* <h1 className="text-xl font-bold mb-2">{hit[ProductAttributes.name]}</h1> */}
         <Highlight
           attribute={ProductAttributes.name}
           hit={hit}
           tagName="h1"
-          className="text-xl text-center font-bold mb-2 break-words overflow-hidden"
-          style={{ minHeight: "3rem", maxHeight: "5rem", overflowY: "auto", overflowWrap: "break-word", wordBreak: "break-word" }}
+          className="hit-title"
         />
       </div>
-      <div className="flex flex-col items-center w-full  mt-4 md:mt-6 lg:mt-8">
-        <p className="text-lg text-green-600">
+
+      <div className="hit-footer">
+        <p className="hit-price">
           ${get(hit, ProductAttributes.price).toFixed(2)}
         </p>
-        <div className="flex justify-center items-center space-x-2 mt-2">
+        <div className="hit-actions">
           <button
-            className="bg-green-500 text-white text-sm px-2 py-1 rounded"
+            className="hit-btn-add"
             onClick={handleAddToCart}
           >
             Add to Cart
           </button>
           {notification && (
-            <div className="fixed top-24 right-1 mt-2 mr-2 bg-green-500 bg-opacity-75 text-white text-lg px-6 py-4 rounded">
-              <Link to="/cart" className="flex">
+            <div className="notification-fixed">
+              <Link to="/cart" >
                 {notification}
               </Link>
             </div>
@@ -87,7 +73,7 @@ function Hit({ hit, highlight: Highlight }) {
               hit[ProductAttributes.objectID]
             )}`}
           >
-            <button className="bg-gray-500 text-white text-sm px-2 py-1 rounded">
+            <button className="hit-btn-view">
               View Details
             </button>
           </Link>

@@ -1,3 +1,231 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  /* Layout wrapper for pages */
+  .container-page {
+    @apply container mx-auto p-8;
+  }
+
+  /* Section heading and divider */
+  .section-title {
+    @apply text-xl font-semibold mb-2;
+  }
+  .divider {
+    @apply border-b border-gray-300;
+  }
+
+  /* Primary action buttons */
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded shadow-lg hover:bg-primary-dark;
+  }
+  /* Secondary action buttons (toggles) */
+  .btn-secondary {
+    @apply bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark;
+  }
+  /* Success action button (Add to Cart) */
+  .btn-success {
+    @apply bg-success text-white text-xl px-8 py-1.5 rounded hover:bg-success-dark;
+  }
+  /* Danger action button (Clear Past Purchases) */
+  .btn-danger {
+    @apply bg-danger text-white px-4 py-2 rounded-lg hover:bg-danger-dark;
+  }
+
+  /* Fixed action buttons */
+  .fixed-cart {
+    @apply fixed right-4 bg-primary text-white px-4 py-2 rounded-lg shadow-lg transition-all duration-300 hover:bg-primary-dark;
+  }
+  .fixed-clear {
+    @apply fixed right-4 bg-danger text-white px-4 py-2 rounded-lg shadow-lg transition-all duration-300 hover:bg-danger-dark;
+  }
+
+  /* Hit buttons */
+  .hit-btn-add {
+    @apply bg-success text-white text-sm px-2 py-1 rounded hover:bg-success-dark;
+  }
+  .hit-btn-view {
+    @apply bg-gray-500 text-white text-sm px-2 py-1 rounded hover:bg-gray-600;
+  }
+
+  /* Notification toasts */
+  .notification {
+    @apply absolute top-full mt-2 w-64 bg-success bg-opacity-75 text-white text-lg px-6 py-4 rounded;
+  }
+  .notification-fixed {
+    @apply fixed top-24 right-1 mt-2 mr-2 bg-success bg-opacity-75 text-white text-lg px-6 py-4 rounded;
+  }
+
+  /* Search input styling */
+  .search-input {
+    @apply w-full p-3 border-2 border-gray-700 rounded placeholder:text-xl;
+  }
+
+  /* Current refinements styling */
+  .current-refinements {
+    @apply flex flex-wrap gap-4 mb-4 hidden md:block;
+  }
+  .current-refinement-item {
+    @apply items-center bg-gray-200 rounded-full mr-4 p-2 text-sm font-semibold text-gray-700 shadow-lg;
+  }
+  .current-refinement-delete {
+    @apply px-3 hover:text-red-900 hover:bg-red-100 rounded-full;
+  }
+
+  /* Sidebar filters */
+  .sidebar {
+    @apply lg:w-1/5 mb-4 lg:mb-0 flex flex-col space-y-4 hidden lg:block;
+  }
+  .sidebar-container {
+    @apply border border-gray-300 shadow-lg p-4 rounded;
+  }
+
+  .custom-hits-wrapper {
+    @apply flex justify-start items-start p-4 m-4;
+  }
+  .custom-hits-list {
+    @apply flex space-x-2;
+  }
+  .custom-hits-item {
+    @apply p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 w-64;
+  }
+  .hits-empty {
+    @apply flex justify-center w-full text-center py-8 text-xl font-semibold;
+  }
+
+  /* Hits grid and items */
+  .hit-list {
+    @apply grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-4 4xl:grid-cols-6 gap-5;
+  }
+  .hit-item {
+    @apply p-2 border-2 border-gray-200 rounded shadow-md;
+  }
+
+  .hit-card {
+    @apply flex flex-col items-center p-2 h-full;
+  }
+  .hit-content {
+    @apply flex flex-col items-center flex-grow;
+  }
+  .hit-img {
+    @apply w-1/2 max-w-xs h-auto mb-2 rounded object-cover;
+  }
+  .hit-category {
+    @apply text-gray-500;
+  }
+  .hit-title {
+    @apply text-xl text-center font-bold mb-2 break-words overflow-hidden min-h-[3rem] max-h-[5rem] overflow-y-auto;
+  }
+  .hit-footer {
+    @apply flex flex-col items-center w-full mt-4 md:mt-6 lg:mt-8;
+  }
+  .hit-price {
+    @apply text-lg text-success;
+  }
+  .hit-actions {
+    @apply flex justify-center items-center space-x-2 mt-2;
+  }
+
+  /* Product detail typography */
+  .product-title {
+    @apply text-2xl font-bold mb-2 dark:text-white;
+  }
+  .product-category {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+  .product-price {
+    @apply text-lg text-success dark:text-success-dark;
+  }
+  .product-description {
+    @apply mt-4 text-gray-700 dark:text-gray-300;
+  }
+
+  /* Past Purchases wrapper (uses container-page) */
+  .past-purchases {
+    @apply container-page;
+  }
+
+  /* Carousel */
+  .carousel-wrapper {
+    @apply relative w-full;
+  }
+  .carousel-container {
+    @apply w-full overflow-x-scroll flex;
+  }
+  .carousel-button {
+    @apply absolute top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full;
+  }
+  .carousel-button--left {
+    @apply left-0;
+  }
+  .carousel-button--right {
+    @apply right-0;
+  }
+
+  /* Empty-state message */
+  .empty-message {
+    @apply flex justify-center w-full text-center py-8 text-xl font-semibold;
+  }
+
+  .cart-page {
+    @apply relative flex flex-col items-center justify-center min-h-screen bg-gray-100;
+  }
+
+  /* Cart grid wrapper */
+  .cart-grid {
+    @apply container mx-auto p-8 grid grid-cols-1 md:grid-cols-2 gap-8;
+  }
+
+  /* Cart item card */
+  .cart-item-card {
+    @apply bg-white shadow-md rounded-lg overflow-hidden mb-6;
+  }
+  .cart-item-body {
+    @apply flex items-center p-4;
+  }
+  .cart-item-img {
+    @apply w-32 h-32 object-cover rounded mr-4;
+  }
+  .cart-item-details {
+    @apply flex flex-col justify-between;
+  }
+  .cart-item-title {
+    @apply text-2xl font-bold mb-2;
+  }
+  .cart-item-category {
+    @apply text-gray-500;
+  }
+  .cart-item-price {
+    @apply text-lg text-success;
+  }
+  .cart-item-quantity {
+    @apply mt-2 text-gray-700;
+  }
+  .cart-item-actions {
+    @apply flex mt-2;
+  }
+  .cart-item-button {
+    @apply bg-danger text-white px-2 py-1 rounded mr-2 hover:bg-danger-dark;
+  }
+
+  /* Cart summary */
+  .cart-summary {
+    @apply w-full bg-white shadow-md rounded-lg p-6 sticky top-24 self-start;
+  }
+  .cart-summary-title {
+    @apply text-2xl font-bold mb-4;
+  }
+  .cart-summary-text {
+    @apply text-lg mb-2;
+  }
+  .cart-summary-actions {
+    @apply items-center justify-center flex flex-col;
+  }
+  .checkout-button {
+    @apply w-full btn-primary mt-4;
+  }
+  .clear-past-button {
+    @apply w-1/2 btn-danger mt-4;
+  }
+}
