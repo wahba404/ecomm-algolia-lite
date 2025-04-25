@@ -9,6 +9,8 @@ export const ProductAttributes = {
     color: "color",
     description: "description",
     brand: "brand",
+    reviews: "reviews",
+    hierarchical_categories: "hierarchical_categories",
   };
 
 //   Default refinement attributes mapping

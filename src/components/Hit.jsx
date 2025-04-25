@@ -1,6 +1,7 @@
 import { useState } from "react";
+import get from "lodash/get";
 import { Link } from "react-router-dom";
-import { ProductAttributes } from "../utils/AttributesMapping";
+import { ProductAttributes } from "../config/attributesMapping";
 
 function Hit({ hit, highlight: Highlight }) {
   const [notification, setNotification] = useState("");
@@ -18,23 +19,17 @@ function Hit({ hit, highlight: Highlight }) {
       itemInCart.quantity += 1;
     }
     // If the item is not in the cart, add it
-
-    //
-    // *** ADJUST ATTRIBUTE NAME HERE. DO NOT CHANGE KEY NAME ***
-    //
     else {
       currentCart.push({
         objectID: hit[ProductAttributes.objectID],
         name: hit[ProductAttributes.name],
-        price: hit[ProductAttributes.price],
+        price: get(hit, ProductAttributes.price),
         image: hit[ProductAttributes.image],
-        category: hit[ProductAttributes.category],
-        color: hit[ProductAttributes.color],
+        category: get(hit, ProductAttributes.category),
+        color: get(hit, ProductAttributes.color),
         quantity: 1,
       });
     }
-    //
-    //
 
     // Save the updated cart to local storage
     localStorage.setItem("cart", JSON.stringify(currentCart));
@@ -53,20 +48,14 @@ function Hit({ hit, highlight: Highlight }) {
           to={`/product/${encodeURIComponent(hit[ProductAttributes.objectID])}`}
           className="flex justify-center w-full"
         >
-          {/* ADJUST ATTRIBUTE NAME BELOW */}
           <img
             src={hit[ProductAttributes.image]}
             alt={hit[ProductAttributes.name]}
             className="w-1/2 max-w-xs h-auto mb-2 rounded object-cover"
           />
-          {/*  */}
         </Link>
-        {/* ADJUST ATTRIBUTE NAME BELOW */}
-        <p className="text-gray-500">{hit[ProductAttributes.category]}</p>
-        {/*  */}
-
-        {/* ADJUST ATTRIBUTE NAME BELOW */}
-        {/* <h1 className="text-xl font-bold mb-2">{hit["product name"]}</h1> */}
+        <p className="text-gray-500">{get(hit, ProductAttributes.category)}</p>
+        {/* <h1 className="text-xl font-bold mb-2">{hit[ProductAttributes.name]}</h1> */}
         <Highlight
           attribute={ProductAttributes.name}
           hit={hit}
@@ -74,14 +63,11 @@ function Hit({ hit, highlight: Highlight }) {
           className="text-xl text-center font-bold mb-2 break-words overflow-hidden"
           style={{ minHeight: "3rem", maxHeight: "5rem", overflowY: "auto", overflowWrap: "break-word", wordBreak: "break-word" }}
         />
-        {/*  */}
       </div>
       <div className="flex flex-col items-center w-full  mt-4 md:mt-6 lg:mt-8">
-        {/* ADJUST ATTRIBUTE NAME BELOW */}
         <p className="text-lg text-green-600">
-          ${parseInt(hit[ProductAttributes.price]).toFixed(2)}
+          ${get(hit, ProductAttributes.price).toFixed(2)}
         </p>
-        {/*  */}
         <div className="flex justify-center items-center space-x-2 mt-2">
           <button
             className="bg-green-500 text-white text-sm px-2 py-1 rounded"

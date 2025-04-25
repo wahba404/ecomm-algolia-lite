@@ -9,7 +9,8 @@ import {
   Highlight,
 } from "react-instantsearch";
 import Hit from "../components/Hit";
-import { ProductAttributes } from '../utils/AttributesMapping';
+import get from "lodash/get";
+import { ProductAttributes } from "../config/attributesMapping";
 
 const searchClient = algoliasearch(
   import.meta.env.VITE_ALGOLIA_APP_ID,
@@ -78,27 +79,22 @@ function ProductDetailPage() {
       itemInCart.quantity += 1;
     }
     // If the item is not in the cart, add it
-
-    // --------------------------------------------------------------------------------
-    // *** ADJUST ATTRIBUTE NAME HERE. DO NOT CHANGE KEY NAME ***
-    // --------------------------------------------------------------------------------
     else {
       currentCart.push({
-        objectID: response?.[ProductAttributes.objectID],
-        name: response?.[ProductAttributes.name],
-        price: response?.[ProductAttributes.price],
-        image: response?.[ProductAttributes.image],
-        category: response?.[ProductAttributes.category],
-        color: response?.[ProductAttributes.color],
+        objectID: get(response, ProductAttributes.objectID),
+        name:     get(response, ProductAttributes.name),
+        price:    get(response, ProductAttributes.price),
+        image:    get(response, ProductAttributes.image),
+        category: get(response, ProductAttributes.category),
+        color:    get(response, ProductAttributes.color),
         quantity: 1,
       });
-    // --------------------------------------------------------------------------------
     }
     // Save the updated cart to local storage
     localStorage.setItem("cart", JSON.stringify(currentCart));
 
     // Display a notification
-    setNotification(`Item ${response?.[ProductAttributes.objectID]} added to cart`);
+    setNotification(`Item ${get(response, ProductAttributes.objectID)} added to cart`);
     setTimeout(() => {
       setNotification("");
     }, 3000);
@@ -121,25 +117,23 @@ function ProductDetailPage() {
         </Link>
       </div>
       <article className="flex flex-col items-center">
-        {/* ADJUST ATTRIBUTE NAMES BELOW */}
         <img
-          src={response?.[ProductAttributes.image] || product.imageUrl}
-          alt={response?.[ProductAttributes.name] || product.name}
+          src={get(response, ProductAttributes.image) || product.imageUrl}
+          alt={get(response, ProductAttributes.name) || product.name}
           className="w-1/2 max-w-xs h-auto mb-4 rounded"
         />
-        <h1 className="text-2xl font-bold mb-2">
-          {response?.[ProductAttributes.name] || product.name}
+        <h1 className="text-2xl font-bold mb-2 dark:text-white">
+        {get(response, ProductAttributes.name) || product.name}
         </h1>
-        <p className="text-gray-500">
-          {response?.[ProductAttributes.category] || product.category}
+        <p className="text-gray-500 dark:text-gray-400">
+        {get(response, ProductAttributes.category) || product.category}
         </p>
-        <p className="text-lg text-green-600">
-          ${response?.[ProductAttributes.price] || product.price}
+        <p className="text-lg text-green-600 dark:text-green-400">
+        ${get(response, ProductAttributes.price)?.toFixed(2) || product.price}
         </p>
-        <p className="mt-4 text-gray-700">
-          {response?.[ProductAttributes.description] || product.description}
+        <p className="mt-4 text-gray-700 dark:text-gray-300">
+        {get(response, ProductAttributes.description) || product.description}
         </p>
-        {/*  */}
 
         <div className="relative flex justify-center items-center space-x-2 mt-2">
           <button
@@ -164,13 +158,13 @@ function ProductDetailPage() {
             Similar Products
           </p>
         </div>
-        {response?.[ProductAttributes.objectID] ? (
+        {get(response, ProductAttributes.objectID) ? (
           <InstantSearch
             searchClient={search2}
             indexName={import.meta.env.VITE_ALGOLIA_INDEX_NAME}
           >
             <LookingSimilar
-              objectIDs={[response?.[ProductAttributes.objectID]]}
+              objectIDs={[get(response, ProductAttributes.objectID)]}
               limit={5}
               itemComponent={({ item }) => (
                 <Hit hit={item} highlight={Highlight} />

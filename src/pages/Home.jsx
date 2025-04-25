@@ -13,10 +13,10 @@ import {
 import Hit from "../components/Hit";
 import { Link } from "react-router-dom";
 import PastPurchase from "../components/PastPurchase";
-
+import get from "lodash/get";
 import { simple } from "instantsearch.js/es/lib/stateMappings";
 import LoadingIndicator from "../components/LoadingIndicator";
-import { ProductAttributes, RefinementAttributes } from "../utils/AttributesMapping";
+import { RefinementAttributes } from "../config/attributesMapping";
 const searchClient = algoliasearch(
   import.meta.env.VITE_ALGOLIA_APP_ID,
   import.meta.env.VITE_ALGOLIA_API_KEY
@@ -179,7 +179,7 @@ function Home() {
               <h2 className="px-4 text-lg font-semibold ">Category</h2>
               <div className="border border-gray-300 shadow-lg p-4 rounded">
                 <RefinementList
-                  attribute={RefinementAttributes.category}
+                  attribute={get(RefinementAttributes, 'category')}
                   className="mt-4"
                   classNames={{
                     list: "space-y-4",
@@ -196,7 +196,7 @@ function Home() {
               <h2 className="px-4 text-lg font-semibold">Color</h2>
               <div className="border border-gray-300 shadow-lg p-4 rounded">
                 <RefinementList
-                  attribute={RefinementAttributes.color}
+                  attribute={get(RefinementAttributes, 'color')}
                   className="mt-4"
                   classNames={{
                     list: "space-y-4",
