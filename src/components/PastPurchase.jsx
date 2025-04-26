@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Hits, Highlight, Index, useConfigure } from "react-instantsearch";
+import { Index, useConfigure } from "react-instantsearch";
 import CustomHits from "./CustomHits";
 
 const getPastPurchases = () => {
@@ -11,7 +11,7 @@ const getPastPurchases = () => {
   }
 };
 
-const PastPurchase = () => {
+const PastPurchase = ({onClose}) => {
   const [filterList, setFilterList] = useState([]);
   const pastPurchases = getPastPurchases();
 
@@ -29,59 +29,44 @@ const PastPurchase = () => {
     <div className="past-purchases">
       <h2 className="section-title">Past Purchases</h2>
       <div className="divider mb-4" />
+      <Index indexName={import.meta.env.VITE_ALGOLIA_INDEX_NAME}>
+        {filterList.length >= 1 ? (
+          <div className="carousel-wrapper">
+            <button
+              className="carousel-button carousel-button--left"
+              onClick={() => {
+                document
+                  .getElementById("carousel")
+                  .scrollBy({ left: -300, behavior: "smooth" });
+              }}
+            >
+              &lt;
+            </button>
+            <div id="carousel" className="carousel-container">
+              <ScopedConfigure filters={filterList} />
+              <CustomHits />
+            </div>
+            <button
+              className="carousel-button carousel-button--right"
+              onClick={() => {
+                document
+                  .getElementById("carousel")
+                  .scrollBy({ left: 300, behavior: "smooth" });
+              }}
+            >
+              &gt;
+            </button>
+          </div>
+        ) : (
+          <>
+          <div className="carousel-wrapper">
+            <ScopedConfigure filters={`objectID:-1`} />
+            <p className="empty-message">You have no past purchases!</p>
+            </div>
+          </>
+        )}
+      </Index>
 
-      <div className="carousel-wrapper">
-        <button
-          className="carousel-button carousel-button--left"
-          onClick={() => {
-            document
-              .getElementById("carousel")
-              .scrollBy({ left: -300, behavior: "smooth" });
-          }}
-        >
-          &lt;
-        </button>
-        <div
-          id="carousel"
-          className="carousel-container"
-        >
-          <Index indexName={import.meta.env.VITE_ALGOLIA_INDEX_NAME}>
-            {filterList.length >= 1 ? (
-              <>
-                <ScopedConfigure filters={filterList} />
-                <CustomHits />
-                {/* <Hits
-                  hitComponent={({ hit }) => (
-                    <Hit hit={hit} highlight={Highlight} />
-                  )}
-                  classNames={{
-                    root: "flex justify-start items-start p-4 m-4",
-                    list: "flex space-x-2 ",
-                    item: "p-1 border-2 border-gray-200 rounded shadow-md flex-shrink-0 w-64",
-                  }}
-                /> */}
-              </>
-            ) : (
-              <>
-                <ScopedConfigure filters={`objectID:-1`} />
-                <p className="empty-message">
-                  You have no past purchases!
-                </p>
-              </>
-            )}
-          </Index>
-        </div>
-        <button
-          className="carousel-button carousel-button--right"
-          onClick={() => {
-            document
-              .getElementById("carousel")
-              .scrollBy({ left: 300, behavior: "smooth" });
-          }}
-        >
-          &gt;
-        </button>
-      </div>
       <div className="divider"></div>
     </div>
   );

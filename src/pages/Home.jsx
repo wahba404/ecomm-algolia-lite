@@ -101,7 +101,7 @@ function Home() {
               className="btn-secondary mt-6 mb-2"
               onClick={togglePastPurchases}
             >
-              {showPastPurchases ? "X" : "Show Past Purchases"}
+              {showPastPurchases ? "Hide Past Purchases" : "Show Past Purchases"}
             </button>
             {showPastPurchases && <PastPurchase />}
             <div className="divider mb-8 mt-4"></div>

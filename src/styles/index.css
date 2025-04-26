@@ -117,7 +117,7 @@
     @apply text-gray-500;
   }
   .hit-title {
-    @apply text-xl text-center font-bold mb-2 break-words overflow-hidden min-h-[3rem] max-h-[5rem] overflow-y-auto;
+    @apply text-xl text-center font-bold mb-2 break-words overflow-hidden min-h-[3rem] max-h-[5rem];
   }
   .hit-footer {
     @apply flex flex-col items-center w-full mt-4 md:mt-6 lg:mt-8 border-t border-gray-200 pt-2;
