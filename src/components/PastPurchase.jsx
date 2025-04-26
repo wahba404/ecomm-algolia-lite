@@ -11,7 +11,7 @@ const getPastPurchases = () => {
   }
 };
 
-const PastPurchase = ({onClose}) => {
+const PastPurchase = () => {
   const [filterList, setFilterList] = useState([]);
   const pastPurchases = getPastPurchases();
 
