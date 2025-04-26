@@ -80,7 +80,7 @@ function ProductDetailPage() {
   return (
     <div className="container-page relative">
       {/* Navigation links with reusable primary button style */}
-      <div className="absolute top-4 left-4 flex space-x-4">
+      <div className="absolute top-4 right-4 flex space-x-4">
         <Link
           to="/"
           className="btn-primary"

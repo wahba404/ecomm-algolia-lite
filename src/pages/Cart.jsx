@@ -18,7 +18,7 @@ function Cart() {
   return (
     <div className="cart-page">
       {/* Back navigation */}
-      <div className="absolute top-4 left-4 p-6">
+      <div className="absolute top-4 right-4 p-6">
         <Link to="/" className="btn-primary">
           Back to Home
         </Link>
@@ -68,7 +68,7 @@ function Cart() {
                         +
                       </button>
                       <button
-                        className="cart-item-button"
+                        className="cart-item-button bg-danger hover:bg-danger-dark"
                         onClick={() => removeItem(item.objectID)}
                       >
                         Remove

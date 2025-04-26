@@ -6,9 +6,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: { DEFAULT: '#3b82f6', dark: '#2563eb' },
-        success: { DEFAULT: '#22c55e', dark: '#16a34a' },
-        danger: { DEFAULT: '#ef4444', dark: '#dc2626' },
+        primary: { DEFAULT: '#565656', dark: '#8b9094' },
+        success: { DEFAULT: '#8b9094', dark: '#b0b6bf' },
+        danger: { DEFAULT: '#d01212', dark: '#de2a36' },
       },
         screens: {
           'sm': '640px', // Small screens and up

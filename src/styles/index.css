@@ -75,7 +75,9 @@
 
   /* Sidebar filters */
   .sidebar {
-    @apply lg:w-1/5 mb-4 lg:mb-0 flex flex-col space-y-4 hidden lg:block;
+    @apply hidden lg:flex lg:flex-col space-y-4 mb-4 lg:mb-0;
+    /* enforce a min-width slightly wider than your cards (e.g. 18rem ≈ 288px) */
+    @apply flex-shrink-0 min-w-[18rem];
   }
   .sidebar-container {
     @apply border border-gray-300 shadow-lg p-4 rounded;
@@ -118,7 +120,7 @@
     @apply text-xl text-center font-bold mb-2 break-words overflow-hidden min-h-[3rem] max-h-[5rem] overflow-y-auto;
   }
   .hit-footer {
-    @apply flex flex-col items-center w-full mt-4 md:mt-6 lg:mt-8;
+    @apply flex flex-col items-center w-full mt-4 md:mt-6 lg:mt-8 border-t border-gray-200 pt-2;
   }
   .hit-price {
     @apply text-lg text-success;
@@ -143,7 +145,7 @@
 
   /* Past Purchases wrapper (uses container-page) */
   .past-purchases {
-    @apply container-page;
+    @apply max-w-max mx-auto p-0;
   }
 
   /* Carousel */
@@ -206,7 +208,7 @@
     @apply flex mt-2;
   }
   .cart-item-button {
-    @apply bg-danger text-white px-2 py-1 rounded mr-2 hover:bg-danger-dark;
+    @apply bg-success text-white px-2 py-1 rounded mr-2 hover:bg-success-dark;
   }
 
   /* Cart summary */

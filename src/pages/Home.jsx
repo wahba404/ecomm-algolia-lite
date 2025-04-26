@@ -97,6 +97,15 @@ function Home() {
             delete: "current-refinement-delete",
           }}
         />
+        <button
+              className="btn-secondary mt-6 mb-2"
+              onClick={togglePastPurchases}
+            >
+              {showPastPurchases ? "X" : "Show Past Purchases"}
+            </button>
+            {showPastPurchases && <PastPurchase />}
+            <div className="divider mb-8 mt-4"></div>
+            <LoadingIndicator />
         <div className="flex flex-col lg:flex-row">
           <aside className="sidebar">
             <div>
@@ -135,15 +144,6 @@ function Home() {
             </div>
           </aside>
           <main className="mt-7 px-5 lg:w-3/4">
-            <button
-              className="btn-secondary mb-2"
-              onClick={togglePastPurchases}
-            >
-              {showPastPurchases ? "X" : "Show Past Purchases"}
-            </button>
-            {showPastPurchases && <PastPurchase />}
-            <div className="divider mb-8 mt-4"></div>
-            <LoadingIndicator />
             <Hits
               hitComponent={({ hit }) => (
                 <Hit hit={hit} highlight={Highlight} />

@@ -26,7 +26,7 @@ const PastPurchase = () => {
   }, []);
 
   return (
-    <div className="container-page past-purchases">
+    <div className="past-purchases">
       <h2 className="section-title">Past Purchases</h2>
       <div className="divider mb-4" />
 
@@ -65,7 +65,7 @@ const PastPurchase = () => {
               <>
                 <ScopedConfigure filters={`objectID:-1`} />
                 <p className="empty-message">
-                  You have no past purchases, go get you some!!!
+                  You have no past purchases!
                 </p>
               </>
             )}
